@@ -19,7 +19,7 @@ limitations under the License.
 package fake
 
 import (
-	controllerv1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	shopnadov1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -31,7 +31,7 @@ var scheme = runtime.NewScheme()
 var codecs = serializer.NewCodecFactory(scheme)
 var parameterCodec = runtime.NewParameterCodec(scheme)
 var localSchemeBuilder = runtime.SchemeBuilder{
-	controllerv1.AddToScheme,
+	shopnadov1.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition

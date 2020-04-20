@@ -1,14 +1,17 @@
 package shopnado
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/shopnado/shopify-controller/shopnado/signals"
+	"github.com/sirupsen/logrus"
 )
 
 type Service interface {
-	Run(s *Server)
+	Run(s *Server) error
 	Stop() error
+	Name() string
 }
 
 type Server struct {
@@ -30,32 +33,49 @@ func NewServer() *Server {
 	return server
 }
 
-func (s *Server) Register(services ...Service) {
+func (server *Server) Register(services ...Service) {
 	for _, service := range services {
-		s.Services = append(s.Services, service)
+		server.Services = append(server.Services, service)
 	}
 }
 
-func (s *Server) Run() {
-	for _, service := range s.Services {
-		s.WaitGroup.Add(1)
-		go service.Run(s)
+func (server *Server) Run() error {
+	for _, service := range server.Services {
+		server.WaitGroup.Add(1)
+		s := service
+		errs := make(chan error, 1)
 
+		go func() {
+			if err := s.Run(server); err != nil {
+				errs <- fmt.Errorf("error while running: %s", err)
+			}
+		}()
+
+		go func() {
+			select {
+			case err := <-errs:
+				logrus.Error(err)
+				logrus.Infof("[%s] shutting down", s.Name())
+				s.Stop()
+			}
+		}()
 	}
-	s.WaitGroup.Wait()
+
+	server.WaitGroup.Wait()
+	return nil
 }
 
-func (s *Server) Shutdown() error {
-	for _, service := range s.Services {
+func (server *Server) Shutdown() error {
+	for _, service := range server.Services {
 		err := service.Stop()
 		if err != nil {
 			return err
 		}
-		s.WaitGroup.Done()
+		server.WaitGroup.Done()
 	}
 	return nil
 }
 
-func (s *Server) Done() {
-	s.WaitGroup.Done()
+func (server *Server) Done() {
+	server.WaitGroup.Done()
 }

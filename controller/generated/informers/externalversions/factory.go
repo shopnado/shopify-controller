@@ -24,8 +24,8 @@ import (
 	time "time"
 
 	versioned "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned"
-	controllershopnadoxyz "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/controller.shopnado.xyz"
 	internalinterfaces "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/internalinterfaces"
+	shopnadoxyz "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/shopnado.xyz"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -172,9 +172,9 @@ type SharedInformerFactory interface {
 	ForResource(resource schema.GroupVersionResource) (GenericInformer, error)
 	WaitForCacheSync(stopCh <-chan struct{}) map[reflect.Type]bool
 
-	Controller() controllershopnadoxyz.Interface
+	Shopnado() shopnadoxyz.Interface
 }
 
-func (f *sharedInformerFactory) Controller() controllershopnadoxyz.Interface {
-	return controllershopnadoxyz.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Shopnado() shopnadoxyz.Interface {
+	return shopnadoxyz.New(f, f.namespace, f.tweakListOptions)
 }

@@ -20,8 +20,8 @@ package fake
 
 import (
 	clientset "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned"
-	controllerv1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/controller.shopnado.xyz/v1"
-	fakecontrollerv1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/controller.shopnado.xyz/v1/fake"
+	shopnadov1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/shopnado.xyz/v1"
+	fakeshopnadov1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/shopnado.xyz/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -76,7 +76,7 @@ func (c *Clientset) Tracker() testing.ObjectTracker {
 
 var _ clientset.Interface = &Clientset{}
 
-// ControllerV1 retrieves the ControllerV1Client
-func (c *Clientset) ControllerV1() controllerv1.ControllerV1Interface {
-	return &fakecontrollerv1.FakeControllerV1{Fake: &c.Fake}
+// ShopnadoV1 retrieves the ShopnadoV1Client
+func (c *Clientset) ShopnadoV1() shopnadov1.ShopnadoV1Interface {
+	return &fakeshopnadov1.FakeShopnadoV1{Fake: &c.Fake}
 }

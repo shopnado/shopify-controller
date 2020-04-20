@@ -21,7 +21,7 @@ package externalversions
 import (
 	"fmt"
 
-	v1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -52,9 +52,9 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
-	// Group=controller.shopnado.xzy, Version=v1
+	// Group=shopnado.xzy, Version=v1
 	case v1.SchemeGroupVersion.WithResource("events"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Controller().V1().Events().Informer()}, nil
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Shopnado().V1().Events().Informer()}, nil
 
 	}
 

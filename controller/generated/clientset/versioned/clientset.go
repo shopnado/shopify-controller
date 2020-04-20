@@ -21,7 +21,7 @@ package versioned
 import (
 	"fmt"
 
-	controllerv1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/controller.shopnado.xyz/v1"
+	shopnadov1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/shopnado.xyz/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -29,19 +29,19 @@ import (
 
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
-	ControllerV1() controllerv1.ControllerV1Interface
+	ShopnadoV1() shopnadov1.ShopnadoV1Interface
 }
 
 // Clientset contains the clients for groups. Each group has exactly one
 // version included in a Clientset.
 type Clientset struct {
 	*discovery.DiscoveryClient
-	controllerV1 *controllerv1.ControllerV1Client
+	shopnadoV1 *shopnadov1.ShopnadoV1Client
 }
 
-// ControllerV1 retrieves the ControllerV1Client
-func (c *Clientset) ControllerV1() controllerv1.ControllerV1Interface {
-	return c.controllerV1
+// ShopnadoV1 retrieves the ShopnadoV1Client
+func (c *Clientset) ShopnadoV1() shopnadov1.ShopnadoV1Interface {
+	return c.shopnadoV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -65,7 +65,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 	}
 	var cs Clientset
 	var err error
-	cs.controllerV1, err = controllerv1.NewForConfig(&configShallowCopy)
+	cs.shopnadoV1, err = shopnadov1.NewForConfig(&configShallowCopy)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +81,7 @@ func NewForConfig(c *rest.Config) (*Clientset, error) {
 // panics if there is an error in the config.
 func NewForConfigOrDie(c *rest.Config) *Clientset {
 	var cs Clientset
-	cs.controllerV1 = controllerv1.NewForConfigOrDie(c)
+	cs.shopnadoV1 = shopnadov1.NewForConfigOrDie(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClientForConfigOrDie(c)
 	return &cs
@@ -90,7 +90,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 // New creates a new Clientset for the given RESTClient.
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
-	cs.controllerV1 = controllerv1.New(c)
+	cs.shopnadoV1 = shopnadov1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs
