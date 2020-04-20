@@ -19,22 +19,22 @@ limitations under the License.
 package fake
 
 import (
-	v1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/shopnado.xyz/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeControllerV1 struct {
+type FakeShopnadoV1 struct {
 	*testing.Fake
 }
 
-func (c *FakeControllerV1) Events(namespace string) v1.EventInterface {
+func (c *FakeShopnadoV1) Events(namespace string) v1.EventInterface {
 	return &FakeEvents{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeControllerV1) RESTClient() rest.Interface {
+func (c *FakeShopnadoV1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

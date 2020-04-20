@@ -19,27 +19,27 @@ limitations under the License.
 package v1
 
 import (
-	v1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	"github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 
-type ControllerV1Interface interface {
+type ShopnadoV1Interface interface {
 	RESTClient() rest.Interface
 	EventsGetter
 }
 
-// ControllerV1Client is used to interact with features provided by the controller.shopnado.xzy group.
-type ControllerV1Client struct {
+// ShopnadoV1Client is used to interact with features provided by the shopnado.xzy group.
+type ShopnadoV1Client struct {
 	restClient rest.Interface
 }
 
-func (c *ControllerV1Client) Events(namespace string) EventInterface {
+func (c *ShopnadoV1Client) Events(namespace string) EventInterface {
 	return newEvents(c, namespace)
 }
 
-// NewForConfig creates a new ControllerV1Client for the given config.
-func NewForConfig(c *rest.Config) (*ControllerV1Client, error) {
+// NewForConfig creates a new ShopnadoV1Client for the given config.
+func NewForConfig(c *rest.Config) (*ShopnadoV1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -48,12 +48,12 @@ func NewForConfig(c *rest.Config) (*ControllerV1Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &ControllerV1Client{client}, nil
+	return &ShopnadoV1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new ControllerV1Client for the given config and
+// NewForConfigOrDie creates a new ShopnadoV1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *ControllerV1Client {
+func NewForConfigOrDie(c *rest.Config) *ShopnadoV1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -61,9 +61,9 @@ func NewForConfigOrDie(c *rest.Config) *ControllerV1Client {
 	return client
 }
 
-// New creates a new ControllerV1Client for the given RESTClient.
-func New(c rest.Interface) *ControllerV1Client {
-	return &ControllerV1Client{c}
+// New creates a new ShopnadoV1Client for the given RESTClient.
+func New(c rest.Interface) *ShopnadoV1Client {
+	return &ShopnadoV1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -81,7 +81,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *ControllerV1Client) RESTClient() rest.Interface {
+func (c *ShopnadoV1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

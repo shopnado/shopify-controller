@@ -18,6 +18,7 @@ type Event struct {
 type EventSpec struct {
 	Test string
 }
+
 type EventStatus struct {
 	Topic   string
 	Payload string

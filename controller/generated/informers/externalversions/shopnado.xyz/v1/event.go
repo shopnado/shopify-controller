@@ -22,10 +22,10 @@ import (
 	"context"
 	time "time"
 
-	controllershopnadoxyzv1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	shopnadoxyzv1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	versioned "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned"
 	internalinterfaces "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/internalinterfaces"
-	v1 "github.com/shopnado/shopify-controller/controller/generated/listers/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/generated/listers/shopnado.xyz/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
@@ -62,16 +62,16 @@ func NewFilteredEventInformer(client versioned.Interface, namespace string, resy
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ControllerV1().Events(namespace).List(context.TODO(), options)
+				return client.ShopnadoV1().Events(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.ControllerV1().Events(namespace).Watch(context.TODO(), options)
+				return client.ShopnadoV1().Events(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&controllershopnadoxyzv1.Event{},
+		&shopnadoxyzv1.Event{},
 		resyncPeriod,
 		indexers,
 	)
@@ -82,7 +82,7 @@ func (f *eventInformer) defaultInformer(client versioned.Interface, resyncPeriod
 }
 
 func (f *eventInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&controllershopnadoxyzv1.Event{}, f.defaultInformer)
+	return f.factory.InformerFor(&shopnadoxyzv1.Event{}, f.defaultInformer)
 }
 
 func (f *eventInformer) Lister() v1.EventLister {

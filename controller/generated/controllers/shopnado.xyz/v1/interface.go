@@ -20,16 +20,16 @@ package v1
 
 import (
 	"github.com/rancher/wrangler/pkg/generic"
-	v1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
-	clientset "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/controller.shopnado.xyz/v1"
-	informers "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
+	clientset "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/typed/shopnado.xyz/v1"
+	informers "github.com/shopnado/shopify-controller/controller/generated/informers/externalversions/shopnado.xyz/v1"
 )
 
 type Interface interface {
 	Event() EventController
 }
 
-func New(controllerManager *generic.ControllerManager, client clientset.ControllerV1Interface,
+func New(controllerManager *generic.ControllerManager, client clientset.ShopnadoV1Interface,
 	informers informers.Interface) Interface {
 	return &version{
 		controllerManager: controllerManager,
@@ -41,7 +41,7 @@ func New(controllerManager *generic.ControllerManager, client clientset.Controll
 type version struct {
 	controllerManager *generic.ControllerManager
 	informers         informers.Interface
-	client            clientset.ControllerV1Interface
+	client            clientset.ShopnadoV1Interface
 }
 
 func (c *version) Event() EventController {

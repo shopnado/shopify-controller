@@ -21,7 +21,7 @@ package fake
 import (
 	"context"
 
-	controllershopnadoxyzv1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	shopnadoxyzv1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -32,29 +32,29 @@ import (
 
 // FakeEvents implements EventInterface
 type FakeEvents struct {
-	Fake *FakeControllerV1
+	Fake *FakeShopnadoV1
 	ns   string
 }
 
-var eventsResource = schema.GroupVersionResource{Group: "controller.shopnado.xzy", Version: "v1", Resource: "events"}
+var eventsResource = schema.GroupVersionResource{Group: "shopnado.xzy", Version: "v1", Resource: "events"}
 
-var eventsKind = schema.GroupVersionKind{Group: "controller.shopnado.xzy", Version: "v1", Kind: "Event"}
+var eventsKind = schema.GroupVersionKind{Group: "shopnado.xzy", Version: "v1", Kind: "Event"}
 
 // Get takes name of the event, and returns the corresponding event object, and an error if there is any.
-func (c *FakeEvents) Get(ctx context.Context, name string, options v1.GetOptions) (result *controllershopnadoxyzv1.Event, err error) {
+func (c *FakeEvents) Get(ctx context.Context, name string, options v1.GetOptions) (result *shopnadoxyzv1.Event, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewGetAction(eventsResource, c.ns, name), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewGetAction(eventsResource, c.ns, name), &shopnadoxyzv1.Event{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*controllershopnadoxyzv1.Event), err
+	return obj.(*shopnadoxyzv1.Event), err
 }
 
 // List takes label and field selectors, and returns the list of Events that match those selectors.
-func (c *FakeEvents) List(ctx context.Context, opts v1.ListOptions) (result *controllershopnadoxyzv1.EventList, err error) {
+func (c *FakeEvents) List(ctx context.Context, opts v1.ListOptions) (result *shopnadoxyzv1.EventList, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewListAction(eventsResource, eventsKind, c.ns, opts), &controllershopnadoxyzv1.EventList{})
+		Invokes(testing.NewListAction(eventsResource, eventsKind, c.ns, opts), &shopnadoxyzv1.EventList{})
 
 	if obj == nil {
 		return nil, err
@@ -64,8 +64,8 @@ func (c *FakeEvents) List(ctx context.Context, opts v1.ListOptions) (result *con
 	if label == nil {
 		label = labels.Everything()
 	}
-	list := &controllershopnadoxyzv1.EventList{ListMeta: obj.(*controllershopnadoxyzv1.EventList).ListMeta}
-	for _, item := range obj.(*controllershopnadoxyzv1.EventList).Items {
+	list := &shopnadoxyzv1.EventList{ListMeta: obj.(*shopnadoxyzv1.EventList).ListMeta}
+	for _, item := range obj.(*shopnadoxyzv1.EventList).Items {
 		if label.Matches(labels.Set(item.Labels)) {
 			list.Items = append(list.Items, item)
 		}
@@ -81,43 +81,43 @@ func (c *FakeEvents) Watch(ctx context.Context, opts v1.ListOptions) (watch.Inte
 }
 
 // Create takes the representation of a event and creates it.  Returns the server's representation of the event, and an error, if there is any.
-func (c *FakeEvents) Create(ctx context.Context, event *controllershopnadoxyzv1.Event, opts v1.CreateOptions) (result *controllershopnadoxyzv1.Event, err error) {
+func (c *FakeEvents) Create(ctx context.Context, event *shopnadoxyzv1.Event, opts v1.CreateOptions) (result *shopnadoxyzv1.Event, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewCreateAction(eventsResource, c.ns, event), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewCreateAction(eventsResource, c.ns, event), &shopnadoxyzv1.Event{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*controllershopnadoxyzv1.Event), err
+	return obj.(*shopnadoxyzv1.Event), err
 }
 
 // Update takes the representation of a event and updates it. Returns the server's representation of the event, and an error, if there is any.
-func (c *FakeEvents) Update(ctx context.Context, event *controllershopnadoxyzv1.Event, opts v1.UpdateOptions) (result *controllershopnadoxyzv1.Event, err error) {
+func (c *FakeEvents) Update(ctx context.Context, event *shopnadoxyzv1.Event, opts v1.UpdateOptions) (result *shopnadoxyzv1.Event, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateAction(eventsResource, c.ns, event), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewUpdateAction(eventsResource, c.ns, event), &shopnadoxyzv1.Event{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*controllershopnadoxyzv1.Event), err
+	return obj.(*shopnadoxyzv1.Event), err
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
-func (c *FakeEvents) UpdateStatus(ctx context.Context, event *controllershopnadoxyzv1.Event, opts v1.UpdateOptions) (*controllershopnadoxyzv1.Event, error) {
+func (c *FakeEvents) UpdateStatus(ctx context.Context, event *shopnadoxyzv1.Event, opts v1.UpdateOptions) (*shopnadoxyzv1.Event, error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewUpdateSubresourceAction(eventsResource, "status", c.ns, event), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewUpdateSubresourceAction(eventsResource, "status", c.ns, event), &shopnadoxyzv1.Event{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*controllershopnadoxyzv1.Event), err
+	return obj.(*shopnadoxyzv1.Event), err
 }
 
 // Delete takes name of the event and deletes it. Returns an error if one occurs.
 func (c *FakeEvents) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	_, err := c.Fake.
-		Invokes(testing.NewDeleteAction(eventsResource, c.ns, name), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewDeleteAction(eventsResource, c.ns, name), &shopnadoxyzv1.Event{})
 
 	return err
 }
@@ -126,17 +126,17 @@ func (c *FakeEvents) Delete(ctx context.Context, name string, opts v1.DeleteOpti
 func (c *FakeEvents) DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error {
 	action := testing.NewDeleteCollectionAction(eventsResource, c.ns, listOpts)
 
-	_, err := c.Fake.Invokes(action, &controllershopnadoxyzv1.EventList{})
+	_, err := c.Fake.Invokes(action, &shopnadoxyzv1.EventList{})
 	return err
 }
 
 // Patch applies the patch and returns the patched event.
-func (c *FakeEvents) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *controllershopnadoxyzv1.Event, err error) {
+func (c *FakeEvents) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *shopnadoxyzv1.Event, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(eventsResource, c.ns, name, pt, data, subresources...), &controllershopnadoxyzv1.Event{})
+		Invokes(testing.NewPatchSubresourceAction(eventsResource, c.ns, name, pt, data, subresources...), &shopnadoxyzv1.Event{})
 
 	if obj == nil {
 		return nil, err
 	}
-	return obj.(*controllershopnadoxyzv1.Event), err
+	return obj.(*shopnadoxyzv1.Event), err
 }

@@ -22,7 +22,7 @@ import (
 	"context"
 	"time"
 
-	v1 "github.com/shopnado/shopify-controller/controller/apis/controller.shopnado.xyz/v1"
+	v1 "github.com/shopnado/shopify-controller/controller/apis/shopnado.xyz/v1"
 	scheme "github.com/shopnado/shopify-controller/controller/generated/clientset/versioned/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
@@ -57,7 +57,7 @@ type events struct {
 }
 
 // newEvents returns a Events
-func newEvents(c *ControllerV1Client, namespace string) *events {
+func newEvents(c *ShopnadoV1Client, namespace string) *events {
 	return &events{
 		client: c.RESTClient(),
 		ns:     namespace,
